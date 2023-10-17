@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Profit Track | Sign In</title>
+		<link
+			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="{% static 'login.css' %}" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="wrapper">
+				<form action="/signin" method="post">
+					{% csrf_token %}
+					<h1>Login</h1>
+					{% if messages %}
+						{% for message in messages %}
+							{% if message.tags == 'success' %}
+								<div class="alert alert-success alertd" id="success-message" role="alert">
+									{{ message }}
+								</div>
+							{% else %}
+								<div class="alert alert-danger alertd" id="error-message" role="alert">
+									{{ message }}
+								</div>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+					<div class="input-box">
+						<input
+							type="text"
+							name="username"
+							placeholder="Username"
+							required
+						/>
+						<i class="bx bxs-user"></i>
+					</div>
+					<div class="input-box">
+						<input
+							type="password"
+							name="pass1"
+							placeholder="Password"
+							required
+						/>
+						<i class="bx bxs-lock-alt"></i>
+					</div>
+					<div class="remember-forgot">
+						<label><input type="checkbox" /> Remember me</label>
+						<a href="#">Forgot password?</a>
+					</div>
+
+					<button type="submit" class="btn">Login</button>
+				</form>
+				<div class="register-link">
+					<p>
+						Don't have an account? <br /><a href="register">Register Now</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<script>
+			var errorMessage = document.getElementById("error-message");
+			var successMessage = document.getElementById("success-message");
+		
+			setTimeout(function () {
+				if (errorMessage) {
+					errorMessage.style.display = "none";
+				}
+				if (successMessage) {
+					successMessage.style.display = "none";
+				}
+			}, 2500);
+		</script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>

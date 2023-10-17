@@ -1,0 +1,202 @@
+* {
+    margin: 1;
+    padding: 1;
+    box-sizing: border-box;
+    font-family: montserrat;
+}
+h2 {
+    font-size: 55px;
+}
+h3 {
+    font-size: 35px;
+}
+p {
+    font-size: 28px;
+}
+
+body {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    background: url('bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    padding: 5px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    background-color: rgba(30, 0, 90, 0.7);
+}
+
+.logo {
+    font-size: 1.5em;
+    color: white;
+    user-select: none;
+}
+.navigation {
+    display: flex;
+    align-items: center;
+}
+.navigation a {
+    position: relative;
+    font-size: 1.1em;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform 0.5s;
+}
+
+.navigation a:hover::after {
+    transform: scaleX(1);
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+}
+.hero {
+    padding: 50px 0;
+    color: #fff;
+    margin-left: 80px;
+}
+.cta-button {
+    width: 200px;
+    height: 40px;
+    background: transparent;
+    border: 2px solid white;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: white;
+    font-weight: 500;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+    text-decoration: none;
+}
+.container .cta-button:hover {
+    background: white;
+    color: #162938;
+}
+.corner-image {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 1;
+    margin-right: 80px;
+}
+.corner-image:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+.logout-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 50px;
+    text-decoration: none;
+}
+
+.logout-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(30, 0, 90, 0.7);
+    min-width: 170px;
+    z-index: 1;
+    top: 25px;
+    right: 0;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.logout-content a {
+    color: white;
+    padding: 8px 7px;
+    text-decoration: none;
+    display: block;
+    margin-left: 0;
+}
+
+.logout-content a::after {
+    content: none;
+}
+
+.logout-content a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.logout-content p {
+    font-size: 18px;
+    color: white;
+    display: block;
+    position: relative;
+    margin-left: 20px;
+}
+
+.show {
+    display: block;
+}
+@media only screen and (max-width: 768px) {
+    header {
+        padding: 5px 20px; 
+        height: 50px; 
+    }
+
+    .logo {
+        font-size: 1.2em; 
+    }
+
+    .navigation {
+        flex-direction: column; 
+        align-items: center; 
+        margin-top: 20px; 
+    }
+
+    .navigation a {
+        margin: 10px 0; 
+    }
+
+    .hero {
+        margin-left: 20px; 
+    }
+
+    .cta-button {
+        width: 150px; 
+        height: 35px; 
+        font-size: 0.9em; 
+    }
+
+    .corner-image {
+        right: 20px; 
+    }
+}

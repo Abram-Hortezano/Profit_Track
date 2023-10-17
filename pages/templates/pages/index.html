@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profit Track</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static 'index.css' %}" />
+  </head>
+  <body>
+    <header>
+      <h2 class="logo">ProfitTrack</h2>
+      <nav class="navigation">
+        <a href="#">Home</a>
+        <a href="about">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <a href="recordtransaction">Record Transaction</a>
+        <div class="logout-dropdown">
+          <i class="fas fa-user" id="user-icon" style="color: white"></i>
+          <div class="logout-content" id="logout-content">
+            <a href="/profile">My Profile</a>
+            <a href="/signin">Logout</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div id="hero" class="hero">
+      <div class="container">
+        <h3>Welcome,&nbsp;{{username|capfirst}}</h3>
+        <h2>
+          Control your <br />
+          bottom line without<br />
+          spreadsheets
+        </h2>
+        <p>
+          Effortlessly manage transactions,<br />
+          invoices, and reports
+        </p>
+        <a href="recordtransaction" class="cta-button">Try It Now</a>
+      </div>
+    </div>
+    <img src="{% static "chart.png" %}" alt="chart" class="corner-image">
+    <script>
+      $(document).ready(function () {
+        const logoutIcon = $("#user-icon");
+        const logoutContent = $("#logout-content");
+
+        logoutIcon.click(function (e) {
+          e.stopPropagation();
+          logoutContent.toggleClass("show");
+        });
+
+        $(document).click(function (e) {
+          if (
+            !logoutContent.is(e.target) &&
+            logoutContent.has(e.target).length === 0
+          ) {
+            logoutContent.removeClass("show");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

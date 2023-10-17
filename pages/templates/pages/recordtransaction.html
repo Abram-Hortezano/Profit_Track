@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Recorder</title>
+    <link rel="stylesheet" href="{% static 'recordtransaction.css' %}" />
+</head>
+<body>
+    <!-- Transaction Form -->
+    <form id="transactionForm">
+
+        <label for="transactionID">Transaction ID:</label>
+        <input type="text" id="transactionID" required>
+
+        <label for="customerName">Customer Name:</label>
+        <input type="text" id="customerName" required>
+
+        <label for="contactNumber">Contact Number:</label>
+        <input type="text" id="contactNumber">
+
+        <label for="transactionAmount">Transaction Amount:</label>
+        <input type="number" id="transactionAmount" required>
+
+        <label for="transactionDate">Transaction Date:</label>
+        <input type="date" id="transactionDate" required>
+
+        <label for="paymentMethod">Payment Method:</label>
+        <select id="paymentMethod">
+            <option value="cash">Cash</option>
+            <option value="credit_card">Credit Card</option>
+            <option value="debit_card">Debit Card</option>
+            <option value="online_payment">Online Payment</option>
+        </select>
+    
+        <label for="category">Category:</label>
+        <select id="category">
+            <option value=""></option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+        </select>
+
+
+        <button type="submit">Save</button>
+    </form>
+
+    <!-- Transaction List -->
+    <h2>Transaction List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Customer Name</th>
+                <th>Contact Number</th>
+                <th>Transaction Amount</th>
+                <th>Transaction Date</th>
+                <th>Payment Method</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="transactionList">
+            <!-- Transaction items will be added here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const transactionForm = document.getElementById('transactionForm');
+            const transactionList = document.getElementById('transactionList');
+            let editingIndex = -1; // Index of the transaction being edited (-1 means no editing)
+
+            transactionForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const transactionID = document.getElementById('transactionID').value;
+                const customerName = document.getElementById('customerName').value;
+                const contactNumber = document.getElementById('contactNumber').value;
+                const transactionAmount = document.getElementById('transactionAmount').value;
+                const transactionDate = document.getElementById('transactionDate').value;
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                const category = document.getElementById('category').value;
+
+                if (editingIndex === -1) {
+                    // Adding a new transaction
+                    addTransactionToTable(transactionID, customerName, contactNumber, transactionAmount, transactionDate, paymentMethod, category);
+                } else {
+                    // Updating an existing transaction
+                    updateTransactionInTable(editingIndex, transactionID, customerName, contactNumber, transactionAmount, transactionDate, paymentMethod, category);
+
+                    // Clear the editing index
+                    editingIndex = -1;
+                }
+
+                // Clear form fields
+                transactionForm.reset();
+                const submitButton = document.querySelector('button[type="submit"]');
+                submitButton.textContent = 'Add Transaction';
+            });
+
+            function addTransactionToTable(transactionID, customerName, contactNumber, transactionAmount, transactionDate, paymentMethod, category) {
+                const row = transactionList.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                const cell4 = row.insertCell(3);
+                const cell5 = row.insertCell(4);
+                const cell6 = row.insertCell(5);
+                const cell7 = row.insertCell(6);
+                const cell8 = row.insertCell(7);
+
+
+                row.className = "transaction-row";
+                cell1.innerHTML = transactionID;
+                cell2.innerHTML = customerName;
+                cell3.innerHTML = contactNumber;
+                cell4.innerHTML = `$${transactionAmount}`;
+                cell6.innerHTML = transactionDate;
+                cell5.innerHTML = paymentMethod;
+                cell7.innerHTML = category;
+                cell8.innerHTML = '<button class="edit-button" onclick="editTransaction(this)">Edit</button>' +
+                                 '<button class="delete-button" onclick="deleteTransaction(this)">Delete</button>';
+
+                // Attach event listeners to the new buttons
+                const editButton = cell8.querySelector('.edit-button');
+                const deleteButton = cell8.querySelector('.delete-button');
+
+                editButton.addEventListener('click', function () {
+                    editTransaction(row);
+                });
+
+                deleteButton.addEventListener('click', function () {
+                    deleteTransaction(row);
+                });
+            }
+
+                function updateTransactionInTable(index, transactionID, customerName, contactNumber, transactionAmount, transactionDate, paymentMethod, category) {
+                    const newRow = transactionList.insertRow(index);
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+                    const cell3 = newRow.insertCell(2);
+                    const cell4 = newRow.insertCell(3);
+                    const cell5 = newRow.insertCell(4);
+                    const cell6 = newRow.insertCell(5);
+                    const cell7 = newRow.insertCell(6);
+                    const cell8 = newRow.insertCell(7);
+
+                    newRow.className = "transaction-row";
+                    cell1.innerHTML = transactionID;
+                    cell2.innerHTML = customerName;
+                    cell3.innerHTML = contactNumber;
+                    cell4.innerHTML = `$${transactionAmount}`;
+                    cell5.innerHTML = transactionDate;
+                    cell6.innerHTML = paymentMethod;
+                    cell7.innerHTML = category;
+                    cell8.innerHTML = '<button class="edit-button" onclick="editTransaction(this)">Edit</button>' +
+                        '<button class="delete-button" onclick="deleteTransaction(this)">Delete</button>';
+
+                    // Remove the previous transaction row
+                    const transactionRow = transactionList.rows[index + 1];
+                    transactionList.deleteRow(index + 1);
+
+                    // Clear the editing index
+                    editingIndex = -1;
+                }
+
+            function editTransaction(row) {
+                const cells = row.cells;
+
+                // Populate the form fields with the extracted data
+                document.getElementById('transactionID').value = cells[0].textContent;
+                document.getElementById('customerName').value = cells[1].textContent;
+                document.getElementById('contactNumber').value = cells[2].textContent;
+                document.getElementById('transactionAmount').value = cells[3].textContent.replace('$', '');
+                document.getElementById('transactionDate').value = cells[4].textContent;
+                document.getElementById('paymentMethod').value = cells[5].textContent;
+                document.getElementById('category').value = cells[6].textContent;
+
+                // Change the "Add Transaction" button to "Update Transaction"
+                const submitButton = document.querySelector('button[type="submit"]');
+                submitButton.textContent = 'Update Transaction';
+                editingIndex = row.rowIndex - 1;
+
+                // Remove the previous transaction row
+                row.parentNode.removeChild(row);
+            }
+
+            function deleteTransaction(row) {
+                row.parentNode.removeChild(row);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfitTrack</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static 'about.css' %}"> 
+</head>
+
+<body>
+    <header>
+        <h2 class="logo">ProfitTrack</h2>
+        <nav class="navigation">
+          <a href="#">Home</a>
+          <a href="about">About</a>
+          <a href="#">Services</a>
+          <a href="#">Contact</a>
+          <a href="recordtransaction">Record Transaction</a>
+          <div class="logout-dropdown">
+            <i class="fas fa-user" id="user-icon" style="color: white"></i>
+            <div class="logout-content" id="logout-content">
+              <a href="/profile">My Profile</a>
+              <a href="/signin">Logout</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+    <div class="content">
+        <h2>Unleash the Power of Precision with ProfitTrack: Your Ultimate Financial Navigator!</h2>
+       
+        <div class = container>
+            <h1>What We offer</h1>
+        <p>Our platform provides a user-friendly interface, allowing you to effortlessly track and analyze profits, expenses, 
+            and revenue streams in real-time. With intuitive features such as customizable reports, expense categorization, 
+            and trend analysis, ProfitTrack equips you with the essential tools needed to make informed financial decisions. 
+            Whether you're a startup, small business, or a growing enterprise, our solution adapts to your specific needs, ensuring 
+            that you have a clear and accurate view of your financial health. Say goodbye to manual spreadsheets and embrace a streamlined
+             approach to profit tracking with ProfitTrack.</p>
+            </div>
+    </div>
+
+   <section class="team">
+    <div class="center">
+        <h1>Our Team</h1>
+    </div>
+    <div class="team-content">
+        <div class="box">
+            <img src="static/img1.jpg.png">
+            <h3>Kimberly</h3>
+            <h5>BSIT</h5>
+            <div class="icons">
+                <a href="#"><i class="ri-facebook-box-fill"></i></a>
+                <a href="#"><i class="ri-instagram-fill"></i></a>
+                <a href="#"><i class="ri-twitter-fill"></i></a>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="static/img2.png">
+            <h3>Abram</h3>
+            <h5>BSIT</h5>
+            <div class="icons">
+                <a href="#"><i class="ri-facebook-box-fill"></i></a>
+                <a href="#"><i class="ri-instagram-fill"></i></a>
+                <a href="#"><i class="ri-twitter-fill"></i></a>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="static/img3.png">
+            <h3>Mez</h3>
+            <h5>BSIT</h5>
+            <div class="icons">
+                <a href="#"><i class="ri-facebook-box-fill"></i></a>
+                <a href="#"><i class="ri-instagram-fill"></i></a>
+                <a href="#"><i class="ri-twitter-fill"></i></a>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="static/img4.png">
+            <h3>Gilbert</h3>
+            <h5>BSIT</h5>
+            <div class="icons">
+                <a href="#"><i class="ri-facebook-box-fill"></i></a>
+                <a href="#"><i class="ri-instagram-fill"></i></a>
+                <a href="#"><i class="ri-twitter-fill"></i></a>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="static/img5.jpg">
+            <h3>David</h3>
+            <h5>BSIT</h5>
+            <div class="icons">
+                <a href="https://www.facebook.com/ellyzesjohn.david.7"><i class="ri-facebook-box-fill"></i></a>
+                <a href="#"><i class="ri-instagram-fill"></i></a>
+                <a href="#"><i class="ri-twitter-fill"></i></a>
+            </div>
+        </div>
+
+       
+    </div>
+   </section>
+   <script>
+    $(document).ready(function () {
+      const logoutIcon = $("#user-icon");
+      const logoutContent = $("#logout-content");
+
+      logoutIcon.click(function (e) {
+        e.stopPropagation();
+        logoutContent.toggleClass("show");
+      });
+
+      $(document).click(function (e) {
+        if (
+          !logoutContent.is(e.target) &&
+          logoutContent.has(e.target).length === 0
+        ) {
+          logoutContent.removeClass("show");
+        }
+      });
+    });
+  </script>
+
+    
+</body>
+
+</html>

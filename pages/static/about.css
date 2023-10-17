@@ -1,0 +1,218 @@
+* {
+    margin: 1;
+    padding: 1;
+    box-sizing: border-box;
+    
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+   padding-top: 70px;
+    min-height: 100vh;
+    color: #ffffff;
+    text-align: center;
+    background: url('bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.container h1{
+    color: yellowgreen;
+    font-size: 1.25rem;
+    margin-bottom: 50px;
+    margin-top: -20px;
+}
+
+.content h2{
+
+    color: #fff;
+    font-weight: 700;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    padding-bottom: 100px;
+    margin-bottom: 10px; 
+    margin-top: 80px; 
+    margin-left: 300px; 
+    margin-right: 300px; 
+}
+
+
+
+p {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    color: #fff;
+    margin-bottom: 10px; 
+    margin-top: 10px; 
+    margin-left: 400px; 
+    margin-right: 400px; 
+}
+
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    padding: 5px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    background-color: rgba(30, 0, 90, 0.7);
+}
+
+.logo {
+    font-size: 1.5em;
+    color: white;
+    user-select: none;
+}
+.navigation {
+    display: flex;
+    align-items: center;
+}
+.navigation a {
+    position: relative;
+    font-size: 1.1em;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform 0.5s;
+}
+
+.navigation a:hover::after {
+    transform: scaleX(1);
+}
+.logout-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 50px;
+    text-decoration: none;
+}
+
+.logout-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(30, 0, 90, 0.7);
+    min-width: 170px;
+    z-index: 1;
+    top: 25px;
+    right: 0;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.logout-content a {
+    color: white;
+    padding: 8px 7px;
+    text-decoration: none;
+    display: block;
+    margin-left: 0;
+}
+
+.logout-content a::after {
+    content: none;
+}
+
+.logout-content a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.logout-content p {
+    font-size: 18px;
+    color: white;
+    display: block;
+    position: relative;
+    margin-left: 20px;
+}
+.show {
+    display: block;
+}
+
+.team{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.team-content{
+    width: 100%;
+    max-width: 1350px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+}
+.team-content img{
+    width:100%;
+    height: auto;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.center h1{
+    color: #fff;
+    font-size: 4rem;
+    text-align: center;
+}
+.box{
+    padding: 16px;
+    background-color: rgba(30, 0, 90, 0.7);
+    border-radius: 15px;
+    transition: all .38s ease;
+}
+
+.box h3{
+    font-size: 23px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+}
+.box h5{
+    font-size: 15px;
+    font-weight: 600;
+    color: #b7b4bb;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+}
+
+.icons i{
+    display: inline-block;
+    color: #fff;
+    font-size: 20px;
+    margin: 0 8px;
+    transition: all .38s ease;
+}
+.icons i :hover{
+    transform: scale(1.2);
+}
+.box:hover{
+    transform: translateY(-10px);
+    cursor: pointer;
+}

@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="{% static 'updateprof.css' %}" />
+</head>
+<body>
+    <header>
+        <h2 class="logo">ProfitTrack</h2>
+        <nav class="navigation">
+          <a href="#">Home</a>
+          <a href="about">About</a>
+          <a href="#">Services</a>
+          <a href="#">Contact</a>
+          <a href="recordtransaction">Record Transaction</a>
+          
+        </nav>
+      </header>
+      <div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+      
+
+      </div>
+      <div class="profile-container">
+        <img class="profile-picture" src="{{user.profile.image.url}}">
+        <form method="POST" action="" enctype="multipart/form-data">
+           
+            {% csrf_token %}
+            {{ user_form.as_p }}
+        </br>
+            {{ profile_form.as_p }}
+            <button class="cta-button">Update</button>
+        </form>
+    </div>
+</body>
+</html>
