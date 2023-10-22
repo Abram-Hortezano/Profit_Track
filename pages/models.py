@@ -11,4 +11,13 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
     
+class RecordTransaction(models.Model):
+    transaction_id = models.IntegerField()
+    customer_name = models.CharField(max_length=20)
+    contact_number = models.IntegerField()
+    transaction_amount = models.FloatField()
+    transaction_date = models.DateField()
+    payment_method = models.CharField(max_length=20)
+    category = models.CharField(max_length=20)
+    actions = models.CharField(max_length=100)
     
