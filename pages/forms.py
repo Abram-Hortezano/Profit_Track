@@ -2,6 +2,7 @@ from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
 from django import forms
+from .models import RecordTransaction
 
 class PasswordChangingForm(PasswordChangeForm):
 
@@ -47,3 +48,8 @@ class ProfilePicForm(forms.ModelForm):
         model = Profile
         fields = ('image',)
        
+
+class RecordTransactionForm(forms.ModelForm):
+    class Meta:
+        model = RecordTransaction
+        fields = '__all__'

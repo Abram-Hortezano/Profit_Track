@@ -30,8 +30,7 @@ class RecordTransaction(models.Model):
     customer_name = models.CharField(max_length=20)
     contact_number = models.CharField(max_length=20, unique=True)
     transaction_amount = models.FloatField()
-    transaction_date = models.DateField()
+    transaction_date = models.DateField(auto_now=True)
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    actions = models.TextField()
     
