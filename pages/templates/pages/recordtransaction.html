@@ -30,8 +30,77 @@
         </tr>
       </thead>
       <tbody id="transactionList">
-        <!-- Transaction items will be added here dynamically -->
+        {% for item in all %}
+        <tr class="transaction-row">
+          <td>{{ item.transaction_id }}</td>
+          <td>{{ item.customer_name }}</td>
+          <td>{{ item.contact_number }}</td>
+          <td>${{ item.transaction_amount }}</td>
+          <td>{{ item.transaction_date }}</td>
+          <td>{{ item.payment_method.name }}</td>
+          <td>{{ item.category.name }}</td>
+          <td>
+            <button
+              class="delete-button"
+              data-transaction-id="{{ item.transaction_id }}"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        function deleteTransaction(transactionID) {
+          const csrfToken = document.querySelector(
+            "[name=csrfmiddlewaretoken]"
+          ).value;
+          const url = `/delete_transaction/${transactionID}/`;
+
+          fetch(url, {
+            method: "DELETE", // Use the HTTP DELETE method
+            headers: {
+              "X-CSRFToken": csrfToken, // Include the CSRF token in the request headers
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  `Failed to delete transaction: ${response.status}`
+                );
+              }
+              return response.json();
+            })
+            .then((data) => {
+              if (data.message === "Transaction deleted successfully") {
+                // Remove the row from the table on success
+                const row = document.getElementById(
+                  `transaction-row-${transactionID}`
+                );
+                if (row) {
+                  row.remove();
+                }
+              } else {
+                // Handle any error messages
+                console.error(data.message);
+              }
+            })
+            .catch((error) => {
+              console.error("An error occurred:", error);
+            });
+        }
+
+        const deleteButtons = document.querySelectorAll(".delete-button");
+
+        deleteButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const transactionID = this.getAttribute("data-transaction-id");
+            deleteTransaction(transactionID);
+          });
+        });
+      });
+    </script>
   </body>
 </html>

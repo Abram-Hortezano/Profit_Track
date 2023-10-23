@@ -21,7 +21,7 @@ urlpatterns = [
     path("password_success", views.password_success, name = "password_success"),
     path("recordtransaction", views.recordtransaction, name = "recordtransaction"),
     path("updateprofile", views.updateprofile, name = "updateprofile"),
-     
+    path("delete_transaction/<int:transaction_id>/", views.delete_transaction, name="delete-transaction"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
