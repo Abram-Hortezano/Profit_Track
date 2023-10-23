@@ -10,7 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse_lazy
 from .forms import SignUpForm, ProfilePicForm, RecordTransactionForm
 from django import forms
-
+from django.http import JsonResponse
 
 @login_required(login_url='signin')
 def index(request):
@@ -85,18 +85,24 @@ class PasswordsChangeView(PasswordChangeView):
 def password_success(request):
     return render(request, 'pages/password_success.html')
 def recordtransaction(request):
-    success_url = reverse_lazy('password_success')
+    all_items = RecordTransaction.objects.all
     if request.method == 'POST':
         form = RecordTransactionForm(request.POST)
         if form.is_valid():
             form.save()
-            # Redirect to a success page or back to the form
-            return redirect(recordtransaction)  # Replace with the appropriate URL name
+            return redirect(recordtransaction)  
     else:
         form = RecordTransactionForm()
     
-    return render(request, 'pages/recordtransaction.html', {'form': form})
+    return render(request, 'pages/recordtransaction.html', {'form': form,'all':all_items})
 
+def delete_transaction(request, transaction_id):
+    try:
+        transaction = RecordTransaction.objects.get(transaction_id=transaction_id)
+        transaction.delete()
+        return JsonResponse({'message': 'Transaction deleted successfully'})
+    except RecordTransaction.DoesNotExist:
+        return JsonResponse({'message': 'Transaction not found'}, status=404)
 
 def updateprofile(request):
     if request.user.is_authenticated:
