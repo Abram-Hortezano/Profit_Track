@@ -18,6 +18,12 @@
 <body>
     <header>
         <h2 class="logo">ProfitTrack</h2>
+        <form class="search-container" method=POST
+        action="{% url 'search'%}">
+          {% csrf_token %}
+          <input type="text" class="search-input" placeholder="Search Transaction ID" aria-label="Search" name="searched">
+          <button class="search-button" type="submit">Search</button>
+        </form>
         <nav class="navigation">
           <a href="#">Home</a>
           <a href="about">About</a>
