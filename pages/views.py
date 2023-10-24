@@ -121,4 +121,11 @@ def updateprofile(request):
     else: 
         messages.success(request, ("You Must Be Logged In to View That Page..."))
         return redirect('home')
-    
+
+def search(request):   
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        transaction = RecordTransaction.objects.filter(transaction_id__contains=searched)
+        return render(request, 'pages/search.html', {'searched':searched,'transaction':transaction})
+    else:
+        return render(request, 'pages/search.html', {})
