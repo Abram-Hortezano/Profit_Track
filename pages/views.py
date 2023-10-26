@@ -122,10 +122,18 @@ def updateprofile(request):
         messages.success(request, ("You Must Be Logged In to View That Page..."))
         return redirect('home')
 
-def search(request):   
+def search(request):
     if request.method == 'POST':
-        searched = request.POST['searched']
-        transaction = RecordTransaction.objects.filter(transaction_id__contains=searched)
-        return render(request, 'pages/search.html', {'searched':searched,'transaction':transaction})
+        searched = request.POST.get('searched', '')
+        if searched:
+            try:
+                transaction = RecordTransaction.objects.get(transaction_id=searched)
+                return render(request, 'pages/search.html', {'searched': searched, 'transaction': transaction})
+            except RecordTransaction.DoesNotExist:
+                # IF NOT EXIST
+                return render(request, 'pages/search.html', {'searched': searched, 'error_message': 'Transaction ID not found'})
+        else:
+            # IF NO SPECIFIED ID
+            return render(request, 'pages/search.html', {'searched': searched, 'error_message': 'Please enter a Transaction ID'})
     else:
-        return render(request, 'pages/search.html', {})
+        return render(request, 'pages/search.html')
