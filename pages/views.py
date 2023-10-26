@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from .forms import SignUpForm, ProfilePicForm, RecordTransactionForm
 from django import forms
 from django.http import JsonResponse
+from django.db.models import Q
 
 @login_required(login_url='signin')
 def index(request):
@@ -125,7 +126,10 @@ def updateprofile(request):
 def search(request):   
     if request.method == 'POST':
         searched = request.POST['searched']
-        transaction = RecordTransaction.objects.filter(transaction_id__contains=searched)
+        transaction = RecordTransaction.objects.filter(Q(transaction_id__contains=searched)|Q(customer_name__contains=searched)
+                                                       |Q(contact_number__contains=searched)|Q(transaction_amount__contains=searched)
+                                                       |Q(transaction_date__contains=searched)|Q(payment_method__name__contains=searched)|Q(category__name__contains=searched)   )
+
         return render(request, 'pages/search.html', {'searched':searched,'transaction':transaction})
     else:
         return render(request, 'pages/search.html', {})

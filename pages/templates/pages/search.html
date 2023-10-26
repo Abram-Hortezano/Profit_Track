@@ -36,7 +36,9 @@
         <h1>You Searched For {{searched}}</h1>
         <br/>
     {% for recordtransaction in transaction %}
-        <a href="{% url 'recordtransaction' %}" class="searched">{{ recordtransaction }} - {{ recordtransaction.customer_name }}</a><br/>
+        <a href="{% url 'recordtransaction' %}" class="searched">{{ recordtransaction }} - {{ recordtransaction.customer_name }} - {{ recordtransaction.contact_number }}
+          - {{ recordtransaction.transaction_amount }}  - {{ recordtransaction.transaction_date }}  - {{ recordtransaction.payment_method }}  - {{ recordtransaction.category }}
+        </a><br/>
     {% endfor %}
     {% else %}
         <h1>You Forgot To Search Transaction ID</h1>
