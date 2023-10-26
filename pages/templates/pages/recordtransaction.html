@@ -31,7 +31,7 @@
       </thead>
       <tbody id="transactionList">
         {% for item in all %}
-        <tr class="transaction-row">
+        <tr class="transaction-row" id="transaction-row-{{ item.transaction_id }}">
           <td>{{ item.transaction_id }}</td>
           <td>{{ item.customer_name }}</td>
           <td>{{ item.contact_number }}</td>
