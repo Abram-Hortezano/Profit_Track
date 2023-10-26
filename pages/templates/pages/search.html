@@ -37,7 +37,7 @@
         <br/>
     {% for recordtransaction in transaction %}
         <a href="{% url 'recordtransaction' %}" class="searched">{{ recordtransaction }} - {{ recordtransaction.customer_name }} - {{ recordtransaction.contact_number }}
-          - {{ recordtransaction.transaction_amount }}  - {{ recordtransaction.transaction_date }}  - {{ recordtransaction.payment_method }}  
+          - {{ recordtransaction.transaction_amount }}  - {{ recordtransaction.transaction_date }}  - {{ recordtransaction.payment_method }}  - {{ recordtransaction.category }}
         </a><br/>
     {% endfor %}
     {% else %}
