@@ -2,6 +2,7 @@
     margin: 1;
     padding: 1;
     box-sizing: border-box;
+    font-family: montserrat;
 
 }
 h1 {
@@ -11,6 +12,7 @@ h1 {
 h2 {
     font-size: 15px;
     color: white;
+    text-align: center;
 }
 p {
     font-size: 28px;
@@ -21,15 +23,17 @@ label{
 }
 
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding-top: 5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
     background: url('bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
     background-position: center;
 }
+
 header {
     position: fixed;
     top: 0;
@@ -42,7 +46,8 @@ header {
     align-items: center;
     z-index: 99;
     background-color: rgba(30, 0, 90, 0.7);
-}   
+}
+
 .logo {
     font-size: 1.5em;
     color: white;
@@ -77,33 +82,268 @@ header {
 .navigation a:hover::after {
     transform: scaleX(1);
 }
-.search-container {
-    display: flex;
-    align-items: center;
-    margin: 20px;
-}
-
-.search-input {
-    padding: 10px;
-    width: 200px;
-    border: none; 
-    border-radius: 30px;
-    font-size: 16px;
-    outline: none; 
+.searched {
+    background: rgba(0, 0, 0, 0.7); /* Add a background color with some transparency */
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px; /* Add padding to the container */
+    width: 50%;
+    margin: 0 auto;
   }
 
-.search-button {
-    padding: 10px 20px;
-    background-color: #440584;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    margin-left: 10px;
-    cursor: pointer;
+.searched li {
+    list-style-type: none;
+    margin-right: 3%; /* Remove the radio buttons */
+  }
+  
+  /* Style the text within the <li> elements */
+  .searched li a {
+    color: white; /* Set text color to white */
+  }
+/* this is a recreation of twitter search in css */
+.form {
+  --input-text-color: #fff;
+  --input-bg-color: #283542;
+  --focus-input-bg-color: transparent;
+  --text-color: #949faa;
+  --active-color: #1b9bee;
+  --width-of-input: 200px;
+  --inline-padding-of-input: 1.2em;
+  --gap: 0.9rem;
+}
+/* form style */
+.form {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 20%;
+  position: relative;
+  isolation: isolate;
+  
+}
+/* a fancy bg for showing background and border when focus. */
+.fancy-bg {
+  position: absolute;
+  width: 100%;
+  inset: 0;
+  background: var(--input-bg-color);
+  border-radius: 30px;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+/* label styling */
+label {
+  width: 100%;
+  padding: 0.8em;
+  height: 40px;
+  padding-inline: var(--inline-padding-of-input);
+  display: flex;
+  align-items: center;
 }
 
-.searched {
-    font-size: 1.0em;
+.search,.close-btn {
+  position: absolute;
+}
+/* styling search-icon */
+.search {
+  fill: var(--text-color);
+  left: var(--inline-padding-of-input);
+}
+/* svg -- size */
+svg {
+  width: 17px;
+  display: block;
+}
+/* styling of close button */
+.close-btn {
+  border: none;
+  right: var(--inline-padding-of-input);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  padding: 0.1em;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--active-color);
+  opacity: 0;
+  visibility: hidden;
+}
+/* styling of input */
+.input {
+  color: var(--input-text-color);
+  width: 100%;
+  margin-inline: min(2em,calc(var(--inline-padding-of-input) + var(--gap)));
+  background: none;
+  border: none;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-color)
+}
+/* input background change in focus */
+.input:focus ~ .fancy-bg {
+  border: 1px solid var(--active-color);
+  background: var(--focus-input-bg-color);
+}
+/* search icon color change in focus */
+.input:focus ~ .search {
+  fill: var(--active-color);
+}
+/* showing close button when typing */
+.input:valid ~ .close-btn {
+  opacity: 1;
+  visibility: visible;
+}
+/* this is for the default background in input,when selecting autofill options -- you can remove this code if you do not want to override the browser style.  */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+  -webkit-transition-delay: 9999s;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+}
+.hero {
+    padding: 50px 0;
+    color: #fff;
+    margin-left: 80px;
+}
+.cta-button {
+    width: 200px;
+    height: 40px;
+    background: transparent;
+    border: 2px solid white;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
     color: white;
-    user-select: none;
+    font-weight: 500;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+    text-decoration: none;
+}
+.container .cta-button:hover {
+    background: white;
+    color: #162938;
+}
+.corner-image {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 1;
+    margin-right: 80px;
+}
+.corner-image:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+.logout-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 50px;
+    text-decoration: none;
+}
+
+.logout-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(30, 0, 90, 0.7);
+    min-width: 170px;
+    z-index: 1;
+    top: 25px;
+    right: 0;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.logout-content a {
+    color: white;
+    padding: 8px 7px;
+    text-decoration: none;
+    display: block;
+    margin-left: 0;
+}
+
+.logout-content a::after {
+    content: none;
+}
+
+.logout-content a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.logout-content p {
+    font-size: 18px;
+    color: white;
+    display: block;
+    position: relative;
+    margin-left: 20px;
+}
+
+
+.show {
+    display: block;
+}
+@media only screen and (max-width: 768px) {
+    header {
+        padding: 5px 20px; 
+        height: 50px; 
+    }
+
+    .logo {
+        font-size: 1.2em; 
+    }
+
+    .navigation {
+        flex-direction: column; 
+        align-items: center; 
+        margin-top: 20px; 
+    }
+
+    .navigation a {
+        margin: 10px 0; 
+    }
+
+    .hero {
+        margin-left: 20px; 
+    }
+
+    .cta-button {
+        width: 150px; 
+        height: 35px; 
+        font-size: 0.9em; 
+    }
+
+    .corner-image {
+        right: 20px; 
+    }
+}
+.search-results-container {
+    text-align: center; 
+    margin: 0 auto;
+    margin-bottom: 25%; 
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    color: white;
 }

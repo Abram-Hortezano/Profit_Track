@@ -17,7 +17,7 @@
 
 <body>
     <header>
-        <h2 class="logo">ProfitTrack</h2>
+      <a href="index"><h2 class="logo">ProfitTrack</h2></a>
         <form class="search-container" method=POST
         action="{% url 'search'%}">
           {% csrf_token %}
@@ -25,7 +25,7 @@
           <button class="search-button" type="submit">Search</button>
         </form>
         <nav class="navigation">
-          <a href="#">Home</a>
+          <a href="index">Home</a>
           <a href="about">About</a>
           <a href="#">Services</a>
           <a href="#">Contact</a>

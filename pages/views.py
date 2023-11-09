@@ -11,6 +11,10 @@ from django.urls import reverse_lazy
 from .forms import SignUpForm, ProfilePicForm, RecordTransactionForm
 from django import forms
 from django.http import JsonResponse
+from django.db.models import Q
+from django.db.models import F, Value
+from django.db.models.functions import Concat
+
 
 @login_required(login_url='signin')
 def index(request):
@@ -84,6 +88,8 @@ class PasswordsChangeView(PasswordChangeView):
 
 def password_success(request):
     return render(request, 'pages/password_success.html')
+
+
 def recordtransaction(request):
     all_items = RecordTransaction.objects.all
     if request.method == 'POST':
@@ -96,6 +102,8 @@ def recordtransaction(request):
     
     return render(request, 'pages/recordtransaction.html', {'form': form,'all':all_items})
 
+
+
 def delete_transaction(request, transaction_id):
     try:
         transaction = RecordTransaction.objects.get(transaction_id=transaction_id)
@@ -103,6 +111,9 @@ def delete_transaction(request, transaction_id):
         return JsonResponse({'message': 'Transaction deleted successfully'})
     except RecordTransaction.DoesNotExist:
         return JsonResponse({'message': 'Transaction not found'}, status=404)
+
+
+
 
 def updateprofile(request):
     if request.user.is_authenticated:
@@ -121,11 +132,23 @@ def updateprofile(request):
     else: 
         messages.success(request, ("You Must Be Logged In to View That Page..."))
         return redirect('home')
-
-def search(request):   
+def search(request):
     if request.method == 'POST':
-        searched = request.POST['searched']
-        transaction = RecordTransaction.objects.filter(transaction_id__contains=searched)
-        return render(request, 'pages/search.html', {'searched':searched,'transaction':transaction})
+        search_term = request.POST.get('searched', '').strip()
+        if search_term:
+            search_terms = search_term.split()  # Split the search term by spaces
+            transactions = RecordTransaction.objects.all()
+
+            for term in search_terms:
+                transactions = transactions.filter(
+                    Q(customer_name__icontains=term) |
+                    Q(category__name__iexact=term) |
+                    Q(payment_method__name__iexact=term) |
+                    Q(transaction_id__iexact=term)
+                )
+
+            return render(request, 'pages/search.html', {'searched': search_term, 'transactions': transactions})
+        else:
+            return render(request, 'pages/search.html', {'searched': search_term, 'error_message': 'Please enter a search term'})
     else:
         return render(request, 'pages/search.html', {})
