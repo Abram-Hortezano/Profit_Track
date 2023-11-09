@@ -151,4 +151,4 @@ def search(request):
         else:
             return render(request, 'pages/search.html', {'searched': search_term, 'error_message': 'Please enter a search term'})
     else:
-        return render(request, 'pages/search.html', {})
+        return render(request, 'pages/search.html')
