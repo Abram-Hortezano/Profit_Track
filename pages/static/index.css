@@ -48,6 +48,7 @@ header {
 .navigation {
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 .navigation a {
     position: relative;
