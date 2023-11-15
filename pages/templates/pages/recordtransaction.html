@@ -1,106 +1,192 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transaction Recorder</title>
-    <link rel="stylesheet" href="{% static 'recordtransaction.css' %}" />
-  </head>
-  <body>
-    <!-- Transaction Form -->
-    <form id="transactionForm" method="post">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">Save</button>
-    </form>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Transaction Recorder</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="{% static 'recordtransaction.css' %}" />
+		<style>
+			.custom-success-message {
+				max-width: 980px; /* Adjust the maximum width as needed */
+				margin-left: 350px; /* Center the message horizontally */
+				padding: 0 auto;
+			}
+		</style>
+	</head>
 
-    <!-- Transaction List -->
-    <h2>Transaction List</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Transaction ID</th>
-          <th>Customer Name</th>
-          <th>Contact Number</th>
-          <th>Transaction Amount</th>
-          <th>Transaction Date</th>
-          <th>Payment Method</th>
-          <th>Category</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="transactionList">
-        {% for item in all %}
-        <tr class="transaction-row" id="transaction-row-{{ item.transaction_id }}">
-          <td>{{ item.transaction_id }}</td>
-          <td>{{ item.customer_name }}</td>
-          <td>{{ item.contact_number }}</td>
-          <td>${{ item.transaction_amount }}</td>
-          <td>{{ item.transaction_date }}</td>
-          <td>{{ item.payment_method.name }}</td>
-          <td>{{ item.category.name }}</td>
-          <td>
-            <button
-              class="delete-button"
-              data-transaction-id="{{ item.transaction_id }}"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        function deleteTransaction(transactionID) {
-          const csrfToken = document.querySelector(
-            "[name=csrfmiddlewaretoken]"
-          ).value;
-          const url = `/delete_transaction/${transactionID}/`;
+	<body>
+		<!-- Transaction Form -->
+		<form id="transactionForm" method="post">
+			{% csrf_token %} {{ form.as_p }}
+			<button type="submit">Save</button>
+		</form>
 
-          fetch(url, {
-            method: "DELETE", // Use the HTTP DELETE method
-            headers: {
-              "X-CSRFToken": csrfToken, // Include the CSRF token in the request headers
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  `Failed to delete transaction: ${response.status}`
-                );
-              }
-              return response.json();
-            })
-            .then((data) => {
-              if (data.message === "Transaction deleted successfully") {
-                // Remove the row from the table on success
-                const row = document.getElementById(
-                  `transaction-row-${transactionID}`
-                );
-                if (row) {
-                  row.remove();
-                }
-              } else {
-                // Handle any error messages
-                console.error(data.message);
-              }
-            })
-            .catch((error) => {
-              console.error("An error occurred:", error);
-            });
-        }
+		<!-- Transaction List -->
+		<h2>Transaction List</h2>
+		{% if messages %}
+		<div
+			class="alert alert-success custom-success-message"
+			id="success-message"
+			role="alert"
+		>
+			{% for message in messages %} {{ message }} {% endfor %}
+		</div>
+		{% endif %}
+		<div id="pdfContent">
+			<table id="transactionTable">
+				<thead>
+					<tr>
+						<th>Transaction ID</th>
+						<th>Customer Name</th>
+						<th>Contact Number</th>
+						<th>Transaction Amount</th>
+						<th>Transaction Date</th>
+						<th>Payment Method</th>
+						<th>Category</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody id="transactionList">
+					{% for item in all %}
+					<tr
+						class="transaction-row"
+						id="transaction-row-{{ item.transaction_id }}"
+					>
+						<td>{{ item.transaction_id }}</td>
+						<td>{{ item.customer_name }}</td>
+						<td>{{ item.contact_number }}</td>
+						<td>${{ item.transaction_amount }}</td>
+						<td>{{ item.transaction_date }}</td>
+						<td>{{ item.payment_method.name }}</td>
+						<td>{{ item.category.name }}</td>
+						<td>
+							<button
+								class="delete-button"
+								data-transaction-id="{{ item.transaction_id }}"
+							>
+								Delete
+							</button>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<button id="downloadPDFButton" class="btn btn-primary">
+			Download as PDF
+		</button>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				function deleteTransaction(transactionID) {
+					const confirmation = confirm(
+						"Are you sure you want to delete this record?"
+					);
 
-        const deleteButtons = document.querySelectorAll(".delete-button");
+					if (confirmation) {
+						const csrfToken = document.querySelector(
+							"[name=csrfmiddlewaretoken]"
+						).value;
+						const url = `/delete_transaction/${transactionID}/`;
 
-        deleteButtons.forEach((button) => {
-          button.addEventListener("click", function () {
-            const transactionID = this.getAttribute("data-transaction-id");
-            deleteTransaction(transactionID);
-          });
-        });
-      });
-    </script>
-  </body>
+						fetch(url, {
+							method: "DELETE",
+							headers: {
+								"X-CSRFToken": csrfToken,
+							},
+						})
+							.then((response) => {
+								if (!response.ok) {
+									throw new Error(
+										`Failed to delete transaction: ${response.status}`
+									);
+								}
+								return response.json();
+							})
+							.then((data) => {
+								if (data.message === "Transaction deleted successfully") {
+									const row = document.getElementById(
+										`transaction-row-${transactionID}`
+									);
+									if (row) {
+										row.remove();
+										showSuccessMessage("Transaction deleted successfully");
+									}
+								} else {
+									console.error(data.message);
+								}
+							})
+							.catch((error) => {
+								console.error("An error occurred:", error);
+							});
+					}
+				}
+
+				function showSuccessMessage(message) {
+					var successMessage = document.createElement("div");
+					successMessage.textContent = message;
+					successMessage.className =
+						"alert alert-success custom-success-message";
+					successMessage.id = "success-message";
+
+					var transactionTable = document.getElementById("transactionTable");
+					document.body.insertBefore(successMessage, transactionTable);
+
+					setTimeout(function () {
+						successMessage.style.display = "none";
+					}, 2000); // Hide the success message after 2 seconds
+				}
+
+				const deleteButtons = document.querySelectorAll(".delete-button");
+
+				deleteButtons.forEach((button) => {
+					button.addEventListener("click", function () {
+						const transactionID = this.getAttribute("data-transaction-id");
+						deleteTransaction(transactionID);
+					});
+				});
+				const recordSuccessMessage = document.getElementById("success-message");
+				if (recordSuccessMessage) {
+					setTimeout(function () {
+						recordSuccessMessage.style.display = "none";
+					}, 2000);
+				}
+				document
+					.getElementById("downloadPDFButton")
+					.addEventListener("click", function () {
+						downloadAsPDF();
+					});
+
+				function downloadAsPDF() {
+					// Get the content of the hidden div for PDF generation
+					const pdfContent = document.getElementById("pdfContent").innerHTML;
+
+					// Create a new window with the content
+					const newWindow = window.open();
+					newWindow.document.write(
+						"<html><head><title>Transaction Records</title></head><body>"
+					);
+					newWindow.document.write(pdfContent);
+					newWindow.document.write("</body></html>");
+					newWindow.document.close();
+
+					// Generate PDF using the window's print function
+					newWindow.print();
+				}
+			});
+		</script>
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+			crossorigin="anonymous"
+		></script>
+	</body>
 </html>
