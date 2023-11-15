@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Profile, PaymentMethod, Category, RecordTransaction # Import your model classes here
+from .models import Profile, PaymentMethod, Category, RecordTransaction, FinancialGoal # Import your model classes here
 
 # Create a list of model classes you want to register
-models_to_register = [Profile, PaymentMethod, Category, RecordTransaction]  # Add your models to this list
+models_to_register = [Profile, PaymentMethod, Category, RecordTransaction, FinancialGoal]  # Add your models to this list
 
 # Register all the models in the list
 for model in models_to_register:

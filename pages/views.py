@@ -1,14 +1,14 @@
 import re
 from django.shortcuts import redirect, render, HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
-from .models import Profile, PaymentMethod, Category , RecordTransaction
+from .models import Profile, PaymentMethod, Category , RecordTransaction, FinancialGoal
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse_lazy
-from .forms import SignUpForm, ProfilePicForm, RecordTransactionForm
+from .forms import SignUpForm, ProfilePicForm, RecordTransactionForm, FinancialGoalForm
 from django import forms
 from django.http import JsonResponse
 from django.db.models import Q
@@ -16,7 +16,8 @@ from django.db.models import Q
 @login_required(login_url='signin')
 def index(request):
     username = request.user.username
-    return render(request, "pages/index.html", {'username': username } )
+    goals = FinancialGoal.objects.filter(user=request.user)
+    return render(request, "pages/index.html", {'username': username, 'goals': goals } )
 
 def signin(request):
     
@@ -133,3 +134,16 @@ def search(request):
         return render(request, 'pages/search.html', {'searched':searched,'transaction':transaction})
     else:
         return render(request, 'pages/search.html', {})
+    
+def add_goal(request):
+    if request.method == 'POST':
+        form = FinancialGoalForm(request.POST)
+        if form.is_valid():
+            goal = form.save(commit=False)
+            goal.user = request.user
+            goal.save()
+            return redirect('index')  # Assuming you have a home view
+    else:
+        form = FinancialGoalForm()
+    
+    return render(request, 'pages/add_goal.html', {'form': form})

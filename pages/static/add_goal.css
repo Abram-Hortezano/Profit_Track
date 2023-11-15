@@ -186,26 +186,6 @@ header {
     margin-left: 10px;
     cursor: pointer;
 }
-.financial-goals-container h2 {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    color: #f0f0f0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-  
-.financial-goals-list {
-    list-style-type: none;
-    color: #f0f0f0;
-    padding: 0;
-}
-  
-.financial-goals-list li {
-    margin-bottom: 5px;
-}
-  
 
 .show {
     display: block;

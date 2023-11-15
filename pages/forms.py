@@ -2,7 +2,7 @@ from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
 from django import forms
-from .models import RecordTransaction
+from .models import RecordTransaction, FinancialGoal
 
 class PasswordChangingForm(PasswordChangeForm):
 
@@ -53,3 +53,8 @@ class RecordTransactionForm(forms.ModelForm):
     class Meta:
         model = RecordTransaction
         fields = '__all__'
+
+class FinancialGoalForm(forms.ModelForm):
+    class Meta:
+        model = FinancialGoal
+        fields = ['name', 'goal_type', 'target_amount', 'deadline']

@@ -26,7 +26,6 @@
         <a href="about">About</a>
         <a href="#">Services</a>
         <a href="#">Contact</a>
-        <a href="add_goal">Add Goal</a>
         <a href="recordtransaction">Record Transaction</a>
         <div class="logout-dropdown">
           <i class="fas fa-user" id="user-icon" style="color: white"></i>
@@ -37,34 +36,11 @@
         </div>
       </nav>
     </header>
-    <div class="financial-goals-container">
-      <h2>Financial Goals</h2>
-
-    {% if goals %}
-    <ul class="financial-goals-list">
-        {% for goal in goals %}
-          <li>{{ goal.name }} - {{ goal.progress }}% complete</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No financial goals set yet. <a href="{% url 'add_goal' %}">Add a goal</a>.</p>
-    {% endif %}
-    </div>
-    <div id="hero" class="hero">
-      <div class="container">
-        <h3>Welcome,&nbsp;{{username|capfirst}}</h3>
-        <h2>
-          Control your <br />
-          bottom line without<br />
-          spreadsheets
-        </h2>
-        <p>
-          Effortlessly manage transactions,<br />
-          invoices, and reports
-        </p>
-        <a href="recordtransaction" class="cta-button">Try It Now</a>
-      </div>
-    </div>
+    <form method="post" action="{% url 'add_goal' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+      </form>
     <img src="{% static "chart.png" %}" alt="chart" class="corner-image">
     <script>
       $(document).ready(function () {

@@ -33,4 +33,14 @@ class RecordTransaction(models.Model):
     transaction_date = models.DateField(auto_now=True)
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    
+
+
+
+
+class FinancialGoal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    goal_type = models.CharField(max_length=50, choices=[('savings', 'Savings'), ('debt_reduction', 'Debt Reduction')])
+    target_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    deadline = models.DateField()
+    progress = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
