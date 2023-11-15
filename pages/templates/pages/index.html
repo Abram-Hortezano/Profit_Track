@@ -43,7 +43,9 @@
     {% if goals %}
     <ul class="financial-goals-list">
         {% for goal in goals %}
-          <li>{{ goal.name }} - {{ goal.progress }}% complete</li>
+          <li>{{ goal.name }} - {{ goal.progress }}% complete
+            <a href="{% url 'view_goal' goal.id %}">View</a>
+          </li>
         {% endfor %}
       </ul>
     {% else %}

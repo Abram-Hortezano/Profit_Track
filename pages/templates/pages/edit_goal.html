@@ -37,11 +37,12 @@
       </nav>
     </header>
     <div class="add-goal-container">
-      <h2>Add Financial Goal</h2>
-      <form method="post" action="{% url 'add_goal' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
+        <h2>Edit Financial Goal</h2>
+        <form method="post" action="{% url 'edit_goal' goal.id %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Save Changes</button>
+        </form>
       </form>
     </div>
     

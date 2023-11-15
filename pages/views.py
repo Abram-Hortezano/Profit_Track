@@ -1,5 +1,5 @@
 import re
-from django.shortcuts import redirect, render, HttpResponse,HttpResponseRedirect
+from django.shortcuts import redirect, render, HttpResponse,HttpResponseRedirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Profile, PaymentMethod, Category , RecordTransaction, FinancialGoal
 from django.contrib import messages
@@ -147,3 +147,8 @@ def add_goal(request):
         form = FinancialGoalForm()
     
     return render(request, 'pages/add_goal.html', {'form': form})
+
+@login_required
+def view_goal(request, goal_id):
+    goal = get_object_or_404(FinancialGoal, pk=goal_id, user=request.user)
+    return render(request, 'pages/view_goal.html', {'goal': goal})

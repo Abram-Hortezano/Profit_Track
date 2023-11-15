@@ -6,6 +6,8 @@ from django.contrib.auth import views as auth_views
 from .views import PasswordsChangeView
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import view_goal
+
 
 urlpatterns = [
     path("", views.signin, name='signin'),
@@ -24,6 +26,8 @@ urlpatterns = [
     path("delete_transaction/<int:transaction_id>/", views.delete_transaction, name="delete-transaction"),
     path("search", views.search, name="search"),
     path("add_goal", views.add_goal, name="add_goal"),
+    path('view_goal/<int:goal_id>/', view_goal, name='view_goal'),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

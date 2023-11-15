@@ -187,6 +187,45 @@ header {
     cursor: pointer;
 }
 
+
+.add-goal-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 50px;
+    color: white;
+}
+  
+.add-goal-container label {
+    display: block;
+    margin-bottom: 8px;
+}
+  
+.add-goal-container input,
+.add-goal-container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+  
+ 
+.add-goal-container button {
+    background-color:  #840058;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.add-goal-container button:hover {
+    background-color:  #620252;
+}
+  
+
 .show {
     display: block;
 }
