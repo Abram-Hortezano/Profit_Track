@@ -14,6 +14,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.db.models import F, Value
 from django.db.models.functions import Concat
+from reportlab.pdfgen import canvas
 
 
 @login_required(login_url='signin')
@@ -91,18 +92,17 @@ def password_success(request):
 
 
 def recordtransaction(request):
-    all_items = RecordTransaction.objects.all
     if request.method == 'POST':
         form = RecordTransactionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(recordtransaction)  
+            messages.success(request, "Record Successfully Created")
+            return redirect('recordtransaction')  # Redirect to the same page
     else:
         form = RecordTransactionForm()
-    
-    return render(request, 'pages/recordtransaction.html', {'form': form,'all':all_items})
 
-
+    all_items = RecordTransaction.objects.all()
+    return render(request, 'pages/recordtransaction.html', {'form': form, 'all': all_items})
 
 def delete_transaction(request, transaction_id):
     try:
