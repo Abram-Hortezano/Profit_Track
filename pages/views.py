@@ -152,3 +152,17 @@ def add_goal(request):
 def view_goal(request, goal_id):
     goal = get_object_or_404(FinancialGoal, pk=goal_id, user=request.user)
     return render(request, 'pages/view_goal.html', {'goal': goal})
+
+@login_required
+def edit_goal(request, goal_id):
+    goal = get_object_or_404(FinancialGoal, pk=goal_id, user=request.user)
+
+    if request.method == 'POST':
+        form = FinancialGoalForm(request.POST, instance=goal)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = FinancialGoalForm(instance=goal)
+
+    return render(request, 'pages\edit_goal.html', {'form': form, 'goal': goal})

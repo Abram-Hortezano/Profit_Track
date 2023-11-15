@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views
 from .views import PasswordsChangeView
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import view_goal
+from .views import view_goal, edit_goal
 
 
 urlpatterns = [
@@ -27,6 +27,7 @@ urlpatterns = [
     path("search", views.search, name="search"),
     path("add_goal", views.add_goal, name="add_goal"),
     path('view_goal/<int:goal_id>/', view_goal, name='view_goal'),
+    path('edit_goal/<int:goal_id>/', edit_goal, name='edit_goal'),
 ]
 
 if settings.DEBUG:

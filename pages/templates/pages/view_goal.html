@@ -44,8 +44,9 @@
         <p><strong>Target Amount:</strong> ${{ goal.target_amount }}</p>
         <p><strong>Deadline:</strong> {{ goal.deadline }}</p>
         <p><strong>Progress:</strong> {{ goal.progress }}%</p>
-     
-        <a href="index">Back to Goals</a>
+
+        <a href="{% url 'edit_goal' goal.id %}">Edit Goal</a>
+        <a href="{% url 'index' %}">Back to Goals</a>
     </div>
     
     <script>
