@@ -33,4 +33,15 @@ class RecordTransaction(models.Model):
     transaction_date = models.DateField(auto_now=True)
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+class Goal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.TextField()
+    target_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    current_amount = models.FloatField(default=0)
+    deadline = models.DateField()
+
+    def __str__(self):
+        return f'{self.user.username} - {self.description}'
+
     

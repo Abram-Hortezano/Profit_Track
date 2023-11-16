@@ -1,0 +1,80 @@
+/* static/css/goal.css */
+* {
+    margin: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    background: url('bg.jpg');
+    background-repeat: no-repeat;
+    margin: 50px;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.list {
+    width: 60vw;
+    text-align: center;
+}
+
+.update{
+    height: 20px;
+    top: 0;
+    position: absolute;
+}
+
+.container {
+    text-align: center;
+    justify-content: center;
+}
+
+h1 {
+    color: #fff;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 5px;
+    padding-right: 30px;
+    padding-left: 30px;
+    height: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.list div {
+    display: flex;
+    justify-content: space-between; /* Space paragraphs evenly */
+    align-items: center;
+    text-align: center;
+    width: 100%; /* Ensure the paragraphs take the full width */
+}
+
+.list div p {
+    margin: 0; /* Remove default margin to center the text */
+}
+
+a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 4px;
+}
+
+a:hover {
+    background-color: #45a049;
+}
