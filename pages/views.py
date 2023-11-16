@@ -1,14 +1,14 @@
 import re
-from django.shortcuts import redirect, render, HttpResponse,HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render, HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
-from .models import Profile, PaymentMethod, Category , RecordTransaction
+from .models import Goal, Profile, PaymentMethod, Category , RecordTransaction
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse_lazy
-from .forms import SignUpForm, ProfilePicForm, RecordTransactionForm
+from .forms import GoalForm, SignUpForm, ProfilePicForm, RecordTransactionForm
 from django import forms
 from django.http import JsonResponse
 from django.db.models import Q
@@ -16,6 +16,47 @@ from django.db.models import F, Value
 from django.db.models.functions import Concat
 from reportlab.pdfgen import canvas
 
+@login_required(login_url='signin')
+def goals(request):
+    user_goals = Goal.objects.filter(user=request.user)
+    return render(request, 'pages/goals.html', {'user_goals': user_goals})
+
+@login_required(login_url='signin')
+def create_goal(request):
+    if request.method == 'POST':
+        form = GoalForm(request.POST)
+        if form.is_valid():
+            goal = form.save(commit=False)
+            goal.user = request.user
+            goal.save()
+            messages.success(request, "Goal created successfully!")
+            return redirect('goals')
+    else:
+        form = GoalForm()
+
+    return render(request, 'pages/create_goal.html', {'form': form})
+
+@login_required(login_url='signin')
+def update_goal(request, goal_id):
+    goal = get_object_or_404(Goal, pk=goal_id)
+
+    if request.method == 'POST':
+        form = GoalForm(request.POST, instance=goal)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Goal updated successfully!")
+            return redirect('goals')
+    else:
+        form = GoalForm(instance=goal)
+
+    return render(request, 'pages/update_goal.html', {'form': form, 'goal': goal})
+
+@login_required(login_url='signin')
+def delete_goal(request, goal_id):
+    goal = Goal.objects.get(pk=goal_id)
+    goal.delete()
+    messages.success(request, "Goal deleted successfully!")
+    return redirect('goals')
 
 @login_required(login_url='signin')
 def index(request):

@@ -1,0 +1,15 @@
+<!-- templates/pages/create_goal.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Goal</title>
+    <link rel="stylesheet" href="{% static "createGoal.css" %}" />
+  </head>
+  <body>
+    <form method="post" action="{% url 'create_goal' %}">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Create Goal</button>
+    </form>
+  </body>
+</html>
