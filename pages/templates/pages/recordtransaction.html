@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="{% static 'recordtransaction.css' %}" />
     <style>
       .custom-success-message {
-        max-width: 980px; /* Adjust the maximum width as needed */
-        margin-left: 350px; /* Center the message horizontally */
+        max-width: 900px; /* Adjust the maximum width as needed */
+        margin-left: 300px; /* Center the message horizontally */
         padding: 0 auto;
       }
       .Trans-List {
@@ -39,7 +39,7 @@
       <h2>Transaction List</h2>
       <a href="{% url 'create_goal' %}" target="blank">Create Goal</a>
       <button id="downloadPDFButton" class="btn btn-primary">
-        Download as PDF
+        <span class="fas fa-print"></span> Export Copy
       </button>
     </div>
     {% if messages %}
@@ -58,8 +58,8 @@
             <th>Transaction ID</th>
             <th>Customer Name</th>
             <th>Contact Number</th>
-            <th>Transaction Amount</th>
-            <th>Transaction Date</th>
+            <th>Amount</th>
+            <th class="date">Date</th>
             <th>Payment Method</th>
             <th>Category</th>
             <th>Actions</th>
@@ -75,8 +75,8 @@
             <td>{{ item.customer_name }}</td>
             <td>{{ item.contact_number }}</td>
             <td>${{ item.transaction_amount }}</td>
-            <td>{{ item.transaction_date }}</td>
-            <td>{{ item.payment_method.name }}</td>
+            <td class="date-column">{{ item.transaction_date }}</td>
+            <td class="payment">{{ item.payment_method.name }}</td>
             <td>{{ item.category.name }}</td>
             <td>
               <button
@@ -91,6 +91,7 @@
         </tbody>
       </table>
     </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         function deleteTransaction(transactionID) {
@@ -166,6 +167,7 @@
             recordSuccessMessage.style.display = "none";
           }, 2000);
         }
+
         document
           .getElementById("downloadPDFButton")
           .addEventListener("click", function () {
@@ -174,14 +176,46 @@
 
         function downloadAsPDF() {
           // Get the content of the hidden div for PDF generation
-          const pdfContent = document.getElementById("pdfContent").innerHTML;
+          const pdfContent = document
+            .getElementById("pdfContent")
+            .cloneNode(true);
+
+          const tableCells = pdfContent.querySelectorAll("td, th");
+          tableCells.forEach((cell) => {
+            cell.style.paddingLeft = "10px"; // Adjust the value as needed
+          });
+
+          // Remove the delete buttons from the cloned content
+          const deleteButtonsInPDF =
+            pdfContent.querySelectorAll(".delete-button");
+          deleteButtonsInPDF.forEach((button) => {
+            button.remove();
+          });
+
+          // Remove the "Actions" header
+          const actionHeader = pdfContent.querySelector("th:last-child");
+          if (actionHeader) {
+            actionHeader.remove();
+          }
+          const transactionIdHeader =
+            pdfContent.querySelector("th:first-child");
+          if (transactionIdHeader) {
+            transactionIdHeader.remove();
+          }
+
+          // Remove the "Transaction ID" column from each row in the table body
+          const transactionIdColumn =
+            pdfContent.querySelectorAll("td:first-child");
+          transactionIdColumn.forEach((td) => {
+            td.remove();
+          });
 
           // Create a new window with the content
           const newWindow = window.open();
           newWindow.document.write(
             "<html><head><title>Transaction Records</title></head><body>"
           );
-          newWindow.document.write(pdfContent);
+          newWindow.document.write(pdfContent.innerHTML);
           newWindow.document.write("</body></html>");
           newWindow.document.close();
 
@@ -192,6 +226,8 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
