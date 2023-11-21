@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="{% static "createGoal.css" %}" />
   </head>
   <body>
-    <form method="post" action="{% url 'create_goal' %}">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">Create Goal</button>
-    </form>
+    
+    <div class="container">
+      <form method="post" action="{% url 'create_goal' %}">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Create Goal</button>
+      </form>
+    </div>
   </body>
 </html>
