@@ -1,0 +1,33 @@
+<!-- templates/pages/goals.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Your Goals</title>
+    <link rel="stylesheet" href="{% static "goal.css" %}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Your Goals</h1>
+      <ul>
+        {% for goal in user_goals %}
+        <li class="list">
+          <div>
+            <p>Note: {{ goal.description }}</p>
+            <p class="target">Target: {{ goal.target_amount }}</p>
+            <p>Deadline: {{ goal.deadline }}</p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="update">
+      <a href="{% url 'create_goal' %}">Create a New Goal</a>
+      {% if goal.id %}
+      <a href="{% url 'update_goal' goal_id=goal.id %}">Update</a>
+      {% else %}
+      <p>No valid goal ID</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

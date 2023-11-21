@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Goal, Profile
 from django import forms
 from .models import RecordTransaction
 
@@ -53,3 +53,11 @@ class RecordTransactionForm(forms.ModelForm):
     class Meta:
         model = RecordTransaction
         fields = '__all__'
+
+class GoalForm(forms.ModelForm):
+    class Meta:
+        model = Goal
+        fields = ['description', 'target_amount', 'deadline']
+        widgets = {
+        'deadline': forms.DateInput(attrs={'type': 'date'}),
+    }
