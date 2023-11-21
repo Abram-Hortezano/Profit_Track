@@ -120,16 +120,19 @@ button.edit-button:hover, button.delete-button:hover {
     background-color: #00b37a;
 }
 #pdfContent {
-    max-width: 980px;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
 }
-
-#downloadPDFButton {
-    display: block;
-    margin: 20px auto; /* Adjust margin as needed */
-    margin-right: 45%;
+.listFeature{
+    margin-left: 9%;
 }
+.Trans-List {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin-left: 50%;
+  }
 .date-column {
     min-width: 140px; /* Adjust the minimum width as needed */
     text-align: center;
