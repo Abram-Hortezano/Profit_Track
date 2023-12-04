@@ -15,6 +15,43 @@ from django.db.models import Q
 from django.db.models import F, Value
 from django.db.models.functions import Concat
 from reportlab.pdfgen import canvas
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import RecordTransaction
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
+
+def transaction_graph(request):
+    transactions = RecordTransaction.objects.all()
+
+    dates = [transaction.transaction_date for transaction in transactions]
+    amounts = [transaction.transaction_amount for transaction in transactions]
+
+    # Create a bar chart
+    plt.bar(dates, amounts)
+    plt.xlabel('Transaction Date')
+    plt.ylabel('Transaction Amount')
+    plt.title('Transaction Amounts Over Time')
+
+    # Save the plot to a BytesIO object
+    image_stream = BytesIO()
+    plt.savefig(image_stream, format='png')
+    plt.close()
+
+    # Convert the BytesIO object to a base64 encoded string
+    image_stream.seek(0)
+    encoded_image = base64.b64encode(image_stream.read()).decode('utf-8')
+
+    # Create a data URI for the HTML img tag
+    image_data_uri = f'data:image/png;base64,{encoded_image}'
+
+    # Pass the image data URI to the template
+    context = {'image_data_uri': image_data_uri}
+
+    return render(request, 'pages/transaction_graph.html', context)
+
+
 
 @login_required(login_url='signin')
 def goals(request):
