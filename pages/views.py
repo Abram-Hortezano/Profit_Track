@@ -17,10 +17,12 @@ from django.db.models.functions import Concat
 from reportlab.pdfgen import canvas
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import RecordTransaction
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
+
 
 def transaction_graph(request):
     transactions = RecordTransaction.objects.all()
@@ -28,15 +30,28 @@ def transaction_graph(request):
     dates = [transaction.transaction_date for transaction in transactions]
     amounts = [transaction.transaction_amount for transaction in transactions]
 
-    # Create a bar chart
-    plt.bar(dates, amounts)
+    # Determine if each transaction is increasing or decreasing
+    colors = ['green' if amounts[i] <= amounts[i+1] else 'red' for i in range(len(amounts)-1)]
+    colors.append('green')  # Set color for the last point
+
+    # Create a line chart with different colors for each line segment
+    plt.figure(figsize=(14, 6))
+
+    for i in range(len(dates)-1):
+        plt.plot(dates[i:i+2], amounts[i:i+2], marker='o', linestyle='-', color=colors[i])
+        plt.annotate(f'{amounts[i]:.2f}', (dates[i], amounts[i]), textcoords="offset points", xytext=(0,10), ha='center')
+
+    # Add annotation for the last point
+    plt.annotate(f'{amounts[-1]:.2f}', (dates[-1], amounts[-1]), textcoords="offset points", xytext=(0,10), ha='center')
+
+    plt.title('Transaction Amounts Over Time (Line Chart)')
     plt.xlabel('Transaction Date')
     plt.ylabel('Transaction Amount')
-    plt.title('Transaction Amounts Over Time')
+    plt.grid()
 
     # Save the plot to a BytesIO object
     image_stream = BytesIO()
-    plt.savefig(image_stream, format='png')
+    plt.savefig(image_stream, format='png', bbox_inches='tight')
     plt.close()
 
     # Convert the BytesIO object to a base64 encoded string
@@ -50,6 +65,8 @@ def transaction_graph(request):
     context = {'image_data_uri': image_data_uri}
 
     return render(request, 'pages/transaction_graph.html', context)
+
+
 
 
 
