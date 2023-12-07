@@ -32,7 +32,6 @@ urlpatterns = [
 =======
     path('transaction_graph', views.transaction_graph, name='transaction_graph'),
     path('search-goals/', search_goals, name='search_goals'),
->>>>>>> Stashed changes
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
