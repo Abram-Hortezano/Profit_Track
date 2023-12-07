@@ -125,13 +125,26 @@ button.edit-button:hover, button.delete-button:hover {
     margin-right: auto;
 }
 .listFeature{
-    margin-left: 9%;
+    margin-left: 2%;
+}
+.btnlistFeature{
+    margin-left: 6%;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    height: 38px;
+    width: 120px;
+}
+.create{
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
 }
 .Trans-List {
     display: flex;
     flex: 1;
     align-items: center;
-    margin-left: 50%;
+    margin-left: 45%;
   }
 .date-column {
     min-width: 140px; /* Adjust the minimum width as needed */
@@ -145,3 +158,4 @@ button.edit-button:hover, button.delete-button:hover {
 .payment{
     text-align: center;
 }
+

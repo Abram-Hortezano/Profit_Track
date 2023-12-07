@@ -31,13 +31,12 @@
     <!-- Transaction List -->
     <div class="Trans-List">
       <h2>Transaction List</h2>
-      <button style="width: 100px; height: 33px; margin-left: 30px; border-radius: 8px; border: none; background-color: #007BFF; font-size: 12px;">
-        <a style="color: white; text-decoration: none; margin-left: 5px;" href="{% url 'create_goal' %}" target="blank" class="listFeature"
+      <button class="btnlistFeature">
+      <a href="{% url 'create_goal' %}" target="blank" class="create"
         >Create Goal</a>
-      </button>
-      
-      <button style="margin-left: 10px; font-size: 12px" id="downloadPDFButton" class="btn btn-primary listFeature">
-        <span class="fas fa-print"></span> Export Copy
+    </button>  
+      <button id="downloadPDFButton" class="btn btn-primary listFeature">
+       Export Copy
       </button>
     </div>
 
@@ -53,7 +52,7 @@
     <div id="pdfContent">
       <table id="transactionTable">
         <thead>
-          <tr style="font-size: 14px; align-content: center;">
+          <tr>
             <th>Transaction ID</th>
             <th>Customer Name</th>
             <th>Contact Number</th>
