@@ -28,11 +28,8 @@ urlpatterns = [
     path("create_goal", views.create_goal, name='create_goal'),
     path("update_goal/<int:goal_id>", views.update_goal, name='update_goal'),
     path("delete_goal/<int:goal_id>", views.delete_goal, name='delete_goal'),
-<<<<<<< Updated upstream
-=======
     path('transaction_graph', views.transaction_graph, name='transaction_graph'),
     path('search-goals/', search_goals, name='search_goals'),
->>>>>>> Stashed changes
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
