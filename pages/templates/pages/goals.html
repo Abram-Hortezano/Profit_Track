@@ -9,6 +9,15 @@
   <body>
     <div class="container">
       <h1>Your Goals</h1>
+
+      <!-- Search Bar -->
+      <form action="{% url 'search_goals' %}" method="GET">
+        <div class="search-container">
+        <input type="text" name="search" placeholder="Search goals...">
+        <button type="submit">Search</button>
+         </div>
+      </form>
+
       <ul>
         {% for goal in user_goals %}
         <li class="list">
@@ -26,7 +35,7 @@
       {% if goal.id %}
       <a href="{% url 'update_goal' goal_id=goal.id %}">Update</a>
       {% else %}
-      <p>No valid goal ID</p>
+      <p style="color: white; margin-top: 10px;">No valid goal ID</p>
       {% endif %}
     </div>
   </body>

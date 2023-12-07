@@ -31,11 +31,12 @@
     <!-- Transaction List -->
     <div class="Trans-List">
       <h2>Transaction List</h2>
-      <a href="{% url 'create_goal' %}" target="blank" class="listFeature"
-        >Create Goal</a
-      >
+      <button class="btnlistFeature">
+      <a href="{% url 'create_goal' %}" target="blank" class="create"
+        >Create Goal</a>
+    </button>  
       <button id="downloadPDFButton" class="btn btn-primary listFeature">
-        <span class="fas fa-print"></span> Export Copy
+       Export Copy
       </button>
     </div>
 

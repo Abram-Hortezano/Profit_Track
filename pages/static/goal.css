@@ -1,6 +1,8 @@
 /* static/css/goal.css */
 * {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -8,32 +10,21 @@ body {
     background-color: #f4f4f4;
     background: url('bg.jpg');
     background-repeat: no-repeat;
-    margin: 50px;
+    margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column; /* Changed to column for better stacking */
+    align-items: center; /* Center content horizontally */
     text-align: center;
-}
-
-.list {
-    width: 60vw;
-    text-align: center;
-}
-
-.update{
-    height: 20px;
-    top: 0;
-    position: absolute;
 }
 
 .container {
-    text-align: center;
-    justify-content: center;
+    margin-top: 50px;
 }
 
 h1 {
     color: #fff;
+    margin-bottom: 20px;
 }
 
 ul {
@@ -41,33 +32,35 @@ ul {
     padding: 0;
 }
 
+.list {
+    width: 80vw; /* Adjusted width for better responsiveness */
+    margin: 0 auto; /* Center the list */
+}
+
 li {
     background-color: #fff;
     margin: 10px 0;
-    padding: 5px;
-    padding-right: 30px;
-    padding-left: 30px;
-    height: 40px;
+    padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
 }
 
 .list div {
     display: flex;
-    justify-content: space-between; /* Space paragraphs evenly */
-    align-items: center;
-    text-align: center;
-    width: 100%; /* Ensure the paragraphs take the full width */
+    flex-direction: column; /* Changed to column for better stacking */
 }
 
 .list div p {
-    margin: 0; /* Remove default margin to center the text */
+    margin: 5px 0; /* Added some spacing between paragraphs */
+}
+
+.update {
+    margin-top: 20px;
 }
 
 a {
     display: inline-block;
-    margin-top: 20px;
+    margin: 20px 0;
     padding: 10px 20px;
     text-decoration: none;
     background-color: #4caf50;
@@ -76,5 +69,32 @@ a {
 }
 
 a:hover {
+    background-color: #45a049;
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+/* Style for the input field */
+input[type="text"] {
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Style for the search button */
+button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Hover effect for the search button */
+button:hover {
     background-color: #45a049;
 }
