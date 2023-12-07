@@ -15,8 +15,6 @@ from django.db.models import Q
 from django.db.models import F, Value
 from django.db.models.functions import Concat
 from reportlab.pdfgen import canvas
-<<<<<<< Updated upstream
-=======
 from django.shortcuts import render
 from django.http import HttpResponse
 import matplotlib
@@ -72,7 +70,6 @@ def transaction_graph(request):
 
 
 
->>>>>>> Stashed changes
 
 @login_required(login_url='signin')
 def goals(request):
