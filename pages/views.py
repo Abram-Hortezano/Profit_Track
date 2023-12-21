@@ -1,4 +1,4 @@
-import re
+
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
 from .models import Goal, Profile, PaymentMethod, Category , RecordTransaction
@@ -22,6 +22,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
+from .models import Goal
 
 
 def transaction_graph(request):
@@ -247,3 +248,12 @@ def search(request):
             return render(request, 'pages/search.html', {'searched': search_term, 'error_message': 'Please enter a search term'})
     else:
         return render(request, 'pages/search.html')
+
+def search_goals(request):
+    search_term = request.GET.get('search', '')
+    user_goals = Goal.objects.filter(description__icontains=search_term)
+
+    context = {
+        'user_goals': user_goals,
+    }
+    return render(request, 'pages/goals.html', context)
